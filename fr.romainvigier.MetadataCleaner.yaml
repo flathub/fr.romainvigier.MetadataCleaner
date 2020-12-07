@@ -9,6 +9,14 @@ finish-args:
   - --share=ipc
   - --device=dri
 
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /share/doc
+  - /share/man
+  - '*.a'
+  - '*.la'
+
 modules:
   - name: libhandy
     buildsystem: meson
@@ -105,11 +113,3 @@ modules:
         url: https://gitlab.com/rmnvgr/metadata-cleaner.git
         tag: v0.9.9-2
         commit: 7ac462c43f826e9e04cad093be2a3d57ec8a5d98
-
-cleanup:
-  - /include
-  - /lib/pkgconfig
-  - /share/doc
-  - /share/man
-  - '*.a'
-  - '*.la'

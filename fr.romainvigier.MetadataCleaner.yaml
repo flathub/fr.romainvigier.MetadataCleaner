@@ -95,7 +95,7 @@ modules:
       - type: git
         url: https://0xacab.org/jvoisin/mat2.git
         branch: master
-        commit: 92dcc8175da12285961d97a6dd64917b8e7ae464
+        commit: 6cd28ed46ceaf3b339ebad2376bce46e940980ac
 
   - name: mimetypes
     buildsystem: simple
@@ -111,5 +111,5 @@ modules:
     sources:
       - type: git
         url: https://gitlab.com/rmnvgr/metadata-cleaner.git
-        tag: v0.9.9-2
-        commit: 7ac462c43f826e9e04cad093be2a3d57ec8a5d98
+        tag: v1.0.0
+        commit: cb6c9ef6c973ab3f10471d19460ee4ad7eb26bde

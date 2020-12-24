@@ -94,8 +94,8 @@ modules:
     sources:
       - type: git
         url: https://0xacab.org/jvoisin/mat2.git
-        branch: master
-        commit: 6cd28ed46ceaf3b339ebad2376bce46e940980ac
+        tag: 0.12.0
+        commit: 88fa71fbde5880107871bf65861d3206ceac1f4e
 
   - name: mimetypes
     buildsystem: simple

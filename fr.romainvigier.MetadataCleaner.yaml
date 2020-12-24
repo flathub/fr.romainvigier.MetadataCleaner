@@ -68,8 +68,8 @@ modules:
     sources:
       - type: git
         url: https://anongit.freedesktop.org/git/poppler/poppler.git
-        tag: poppler-20.12.0
-        commit: 8766a45a1e101538724d2b767b3efd0ec210357c
+        tag: poppler-20.12.1
+        commit: 5d3e71c8215997a96d2ade7272217087f7e59fe2
 
   - name: python3-mutagen
     buildsystem: simple

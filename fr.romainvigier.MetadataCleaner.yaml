@@ -28,8 +28,8 @@ modules:
     sources:
       - type: git
         url: https://gitlab.gnome.org/GNOME/libhandy.git
-        tag: 1.0.2
-        commit: 465c00f8f80c27330be494ed7c0ba2ffe26321c4
+        tag: 1.0.3
+        commit: 7126d2e8da9dcdeb5751e60ff6a74930804f9637
 
   - name: ffmpeg
     buildsystem: autotools
@@ -68,8 +68,8 @@ modules:
     sources:
       - type: git
         url: https://anongit.freedesktop.org/git/poppler/poppler.git
-        tag: poppler-20.12.0
-        commit: 8766a45a1e101538724d2b767b3efd0ec210357c
+        tag: poppler-20.12.1
+        commit: 5d3e71c8215997a96d2ade7272217087f7e59fe2
 
   - name: python3-mutagen
     buildsystem: simple
@@ -94,8 +94,8 @@ modules:
     sources:
       - type: git
         url: https://0xacab.org/jvoisin/mat2.git
-        branch: master
-        commit: 6cd28ed46ceaf3b339ebad2376bce46e940980ac
+        tag: 0.12.0
+        commit: 88fa71fbde5880107871bf65861d3206ceac1f4e
 
   - name: mimetypes
     buildsystem: simple
@@ -111,5 +111,5 @@ modules:
     sources:
       - type: git
         url: https://gitlab.com/rmnvgr/metadata-cleaner.git
-        tag: v1.0.0
-        commit: cb6c9ef6c973ab3f10471d19460ee4ad7eb26bde
+        tag: v1.0.1
+        commit: dd39f7989250f0a0f7c43073fe18e643568aff39

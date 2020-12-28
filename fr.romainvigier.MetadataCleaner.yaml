@@ -111,5 +111,5 @@ modules:
     sources:
       - type: git
         url: https://gitlab.com/rmnvgr/metadata-cleaner.git
-        tag: v1.0.0
-        commit: cb6c9ef6c973ab3f10471d19460ee4ad7eb26bde
+        tag: v1.0.1
+        commit: dd39f7989250f0a0f7c43073fe18e643568aff39

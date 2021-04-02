@@ -1,6 +1,6 @@
 app-id: fr.romainvigier.MetadataCleaner
 runtime: org.gnome.Platform
-runtime-version: '3.38'
+runtime-version: '40'
 sdk: org.gnome.Sdk
 command: metadata-cleaner
 finish-args:
@@ -18,18 +18,6 @@ cleanup:
   - '*.la'
 
 modules:
-  - name: libhandy
-    buildsystem: meson
-    config-opts:
-      - "-Dtests=false"
-      - "-Dexamples=false"
-      - "-Dglade_catalog=disabled"
-      - "-Dvapi=false"
-    sources:
-      - type: git
-        url: https://gitlab.gnome.org/GNOME/libhandy.git
-        tag: 1.0.3
-        commit: 7126d2e8da9dcdeb5751e60ff6a74930804f9637
 
   - name: ffmpeg
     buildsystem: autotools
@@ -94,8 +82,8 @@ modules:
     sources:
       - type: git
         url: https://0xacab.org/jvoisin/mat2.git
-        tag: 0.12.0
-        commit: 88fa71fbde5880107871bf65861d3206ceac1f4e
+        tag: 0.12.1
+        commit: c5841a241dcf737599422e34a99d8001f974d13a
 
   - name: mimetypes
     buildsystem: simple
@@ -111,5 +99,5 @@ modules:
     sources:
       - type: git
         url: https://gitlab.com/rmnvgr/metadata-cleaner.git
-        tag: v1.0.3
-        commit: f03701849e2d077145bceb7029e47affb6ab7f12
+        tag: v1.0.4
+        commit: 51de0651770fe907286e37164c204e79413637c8

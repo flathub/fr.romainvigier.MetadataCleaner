@@ -90,14 +90,15 @@ modules:
     build-commands:
       - install -D mime.types $FLATPAK_DEST/share/
     sources:
-      - type: file
-        url: https://bazaar.launchpad.net/~ubuntu-branches/debian/stretch/mime-support/stretch/download/head:/mime.types
-        sha256: f0552ed253ba5e462a4e0ff0dcda3615087a97cb94774faef1f86860f1380a85
+      - type: git
+        url: https://salsa.debian.org/debian/mime-support.git
+        tag: '3.58'
+        commit: bd18e37b6648ae92ac68838339ec3b6d271ddf66
 
   - name: metadata-cleaner
     buildsystem: meson
     sources:
       - type: git
         url: https://gitlab.com/rmnvgr/metadata-cleaner.git
-        tag: v1.0.4
-        commit: 51de0651770fe907286e37164c204e79413637c8
+        tag: v1.0.5
+        commit: 11b317fb89841c5880017dc9aa840a7182ebbf96

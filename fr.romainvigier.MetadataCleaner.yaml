@@ -85,15 +85,15 @@ modules:
         tag: 0.12.1
         commit: c5841a241dcf737599422e34a99d8001f974d13a
 
-  - name: mimetypes
+  - name: media-types
     buildsystem: simple
     build-commands:
       - install -D mime.types $FLATPAK_DEST/share/
     sources:
       - type: git
-        url: https://salsa.debian.org/debian/mime-support.git
-        tag: '3.58'
-        commit: bd18e37b6648ae92ac68838339ec3b6d271ddf66
+        url: https://salsa.debian.org/debian/media-types.git
+        tag: '4.0.0'
+        commit: 0693ea7ac0d276c9c8dbae86e1b6c011443d7078
 
   - name: metadata-cleaner
     buildsystem: meson

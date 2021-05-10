@@ -24,8 +24,8 @@ modules:
     sources:
       - type: git
         url: https://git.ffmpeg.org/ffmpeg.git
-        tag: n4.3.1
-        commit: 6b6b9e593dd4d3aaf75f48d40a13ef03bdef9fdb
+        tag: n4.4
+        commit: dc91b913b6260e85e1304c74ff7bb3c22a8c9fb1
         x-checker-data:
           type: git
           tag-pattern: ^n([\d\.]+)$
@@ -41,8 +41,8 @@ modules:
       - chmod -R u+w $FLATPAK_DEST/lib/perl5
     sources:
       - type: archive
-        url: https://www.cpan.org/src/5.0/perl-5.32.0.tar.gz
-        sha256: efeb1ce1f10824190ad1cadbcccf6fdb8a5d37007d0100d2d9ae5f2b5900c0b4
+        url: https://www.cpan.org/src/5.0/perl-5.32.1.tar.gz
+        sha256: 03b693901cd8ae807231b1787798cf1f2e0b8a56218d07b7da44f784a7caeb2c
         x-checker-data:
           type: html
           url: https://www.perl.org/
@@ -56,8 +56,8 @@ modules:
       - make install
     sources:
       - type: archive
-        url: https://exiftool.org/Image-ExifTool-12.14.tar.gz
-        sha256: c1682bd467b0cfb3a385cfe17e413e33a15070d4fe55b82f0302ca47f42341a4
+        url: https://exiftool.org/Image-ExifTool-12.25.tar.gz
+        sha256: 97821df046ef24c04e1dd5855847a9db768193c9e6471fbd5145e1e6e3a37887
         x-checker-data:
           type: html
           url: https://exiftool.org/rss.xml
@@ -68,8 +68,8 @@ modules:
     sources:
       - type: git
         url: https://anongit.freedesktop.org/git/poppler/poppler.git
-        tag: poppler-21.01.0
-        commit: 3b82fb789116c805b0a69f6bf3a72466a1e87308
+        tag: poppler-21.05.0
+        commit: 7961ff99df6db70319548b07249194cabfc74783
         x-checker-data:
           type: git
           tag-pattern: ^poppler-([\d\.]+)$
@@ -78,7 +78,8 @@ modules:
     buildsystem: simple
     build-commands:
       - python3 setup.py build
-      - python3 setup.py install --optimize=1 --single-version-externally-managed --prefix=$FLATPAK_DEST --root=/
+      - python3 setup.py install --optimize=1 --single-version-externally-managed
+        --prefix=$FLATPAK_DEST --root=/
     ensure-writable:
       - /lib/python3*/site-packages/easy-install.pth
     sources:
@@ -94,13 +95,14 @@ modules:
     buildsystem: simple
     build-commands:
       - python3 setup.py build
-      - python3 setup.py install --optimize=1 --single-version-externally-managed --prefix=$FLATPAK_DEST --root=/
+      - python3 setup.py install --optimize=1 --single-version-externally-managed
+        --prefix=$FLATPAK_DEST --root=/
     ensure-writable:
       - /lib/python3*/site-packages/easy-install.pth
     sources:
       - type: git
         url: https://0xacab.org/jvoisin/mat2.git
-        tag: '0.12.1'
+        tag: 0.12.1
         commit: c5841a241dcf737599422e34a99d8001f974d13a
         x-checker-data:
           type: git
@@ -113,7 +115,7 @@ modules:
     sources:
       - type: git
         url: https://salsa.debian.org/debian/media-types.git
-        tag: '4.0.0'
+        tag: 4.0.0
         commit: 0693ea7ac0d276c9c8dbae86e1b6c011443d7078
         x-checker-data:
           type: git

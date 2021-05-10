@@ -26,6 +26,9 @@ modules:
         url: https://git.ffmpeg.org/ffmpeg.git
         tag: n4.3.1
         commit: 6b6b9e593dd4d3aaf75f48d40a13ef03bdef9fdb
+        x-checker-data:
+          type: git
+          tag-pattern: ^n([\d\.]+)$
 
   - name: perl
     buildsystem: simple
@@ -40,6 +43,11 @@ modules:
       - type: archive
         url: https://www.cpan.org/src/5.0/perl-5.32.0.tar.gz
         sha256: efeb1ce1f10824190ad1cadbcccf6fdb8a5d37007d0100d2d9ae5f2b5900c0b4
+        x-checker-data:
+          type: html
+          url: https://www.perl.org/
+          version-pattern: <span class="version-highlight">([\d\.]+)</span>
+          url-template: https://www.cpan.org/src/$major.0/perl-$version.tar.gz
 
   - name: exiftool
     buildsystem: simple
@@ -50,6 +58,10 @@ modules:
       - type: archive
         url: https://exiftool.org/Image-ExifTool-12.14.tar.gz
         sha256: c1682bd467b0cfb3a385cfe17e413e33a15070d4fe55b82f0302ca47f42341a4
+        x-checker-data:
+          type: html
+          url: https://exiftool.org/rss.xml
+          pattern: (https://exiftool.org/Image-ExifTool-([\d\.]+).tar.gz)
 
   - name: poppler
     buildsystem: cmake
@@ -58,6 +70,9 @@ modules:
         url: https://anongit.freedesktop.org/git/poppler/poppler.git
         tag: poppler-21.01.0
         commit: 3b82fb789116c805b0a69f6bf3a72466a1e87308
+        x-checker-data:
+          type: git
+          tag-pattern: ^poppler-([\d\.]+)$
 
   - name: python3-mutagen
     buildsystem: simple
@@ -71,6 +86,9 @@ modules:
         url: https://github.com/quodlibet/mutagen.git
         tag: release-1.45.1
         commit: 07108702b18d373d883ee9a36d2dd1066e621a0c
+        x-checker-data:
+          type: git
+          tag-pattern: ^release-([\d\.]+)$
 
   - name: python3-libmat2
     buildsystem: simple
@@ -82,8 +100,11 @@ modules:
     sources:
       - type: git
         url: https://0xacab.org/jvoisin/mat2.git
-        tag: 0.12.1
+        tag: '0.12.1'
         commit: c5841a241dcf737599422e34a99d8001f974d13a
+        x-checker-data:
+          type: git
+          tag-pattern: ^([\d\.]+)$
 
   - name: media-types
     buildsystem: simple
@@ -94,6 +115,9 @@ modules:
         url: https://salsa.debian.org/debian/media-types.git
         tag: '4.0.0'
         commit: 0693ea7ac0d276c9c8dbae86e1b6c011443d7078
+        x-checker-data:
+          type: git
+          tag-pattern: ^([\d\.]+)$
 
   - name: metadata-cleaner
     buildsystem: meson
@@ -102,3 +126,6 @@ modules:
         url: https://gitlab.com/rmnvgr/metadata-cleaner.git
         tag: v1.0.6
         commit: 733438fc325e38623aab8224067bbf3b2e28193b
+        x-checker-data:
+          type: git
+          tag-pattern: ^v([\d\.]+)$

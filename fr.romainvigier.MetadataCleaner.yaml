@@ -41,8 +41,8 @@ modules:
       - chmod -R u+w $FLATPAK_DEST/lib/perl5
     sources:
       - type: archive
-        url: https://www.cpan.org/src/5.0/perl-5.32.1.tar.gz
-        sha256: 03b693901cd8ae807231b1787798cf1f2e0b8a56218d07b7da44f784a7caeb2c
+        url: https://www.cpan.org/src/5.0/perl-5.34.0.tar.gz
+        sha256: 551efc818b968b05216024fb0b727ef2ad4c100f8cb6b43fab615fa78ae5be9a
         x-checker-data:
           type: html
           url: https://www.perl.org/
@@ -56,8 +56,8 @@ modules:
       - make install
     sources:
       - type: archive
-        url: https://exiftool.org/Image-ExifTool-12.25.tar.gz
-        sha256: 97821df046ef24c04e1dd5855847a9db768193c9e6471fbd5145e1e6e3a37887
+        url: https://exiftool.org/Image-ExifTool-12.26.tar.gz
+        sha256: ed9f3285e263636c713ab52fcfb55cbcf4becd6c6e04bda410c8f240996ece9e
         x-checker-data:
           type: html
           url: https://exiftool.org/rss.xml

@@ -65,6 +65,17 @@ modules:
 
   - name: poppler
     buildsystem: cmake
+    config-opts:
+      - "-DENABLE_SPLASH=OFF"
+      - "-DBUILD_GTK_TESTS=OFF"
+      - "-DBUILD_QT5_TESTS=OFF"
+      - "-DBUILD_QT6_TESTS=OFF"
+      - "-DBUILD_CPP_TESTS=OFF"
+      - "-DBUILD_MANUAL_TESTS=OFF"
+      - "-DENABLE_CPP=OFF"
+      - "-DENABLE_UTILS=OFF"
+      - "-DENABLE_QT5=OFF"
+      - "-DENABLE_QT6=OFF"
     sources:
       - type: git
         url: https://anongit.freedesktop.org/git/poppler/poppler.git

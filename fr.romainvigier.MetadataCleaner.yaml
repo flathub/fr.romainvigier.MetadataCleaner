@@ -21,6 +21,22 @@ modules:
 
   - name: ffmpeg
     buildsystem: autotools
+    config-opts:
+      - --disable-ffplay
+      - --disable-ffprobe
+      - --disable-doc
+      - --disable-htmlpages
+      - --disable-manpages
+      - --disable-podpages
+      - --disable-txtpages
+      - --disable-decoders
+      - --disable-encoders
+      - --disable-parsers
+      - --disable-bsfs
+      - --disable-protocols
+      - --enable-protocol=file
+      - --disable-devices
+      - --disable-filters
     sources:
       - type: git
         url: https://git.ffmpeg.org/ffmpeg.git
@@ -41,8 +57,8 @@ modules:
       - chmod -R u+w $FLATPAK_DEST/lib/perl5
     sources:
       - type: archive
-        url: https://www.cpan.org/src/5.0/perl-5.32.1.tar.gz
-        sha256: 03b693901cd8ae807231b1787798cf1f2e0b8a56218d07b7da44f784a7caeb2c
+        url: https://www.cpan.org/src/5.0/perl-5.34.0.tar.gz
+        sha256: 551efc818b968b05216024fb0b727ef2ad4c100f8cb6b43fab615fa78ae5be9a
         x-checker-data:
           type: html
           url: https://www.perl.org/
@@ -56,8 +72,8 @@ modules:
       - make install
     sources:
       - type: archive
-        url: https://exiftool.org/Image-ExifTool-12.25.tar.gz
-        sha256: 97821df046ef24c04e1dd5855847a9db768193c9e6471fbd5145e1e6e3a37887
+        url: https://exiftool.org/Image-ExifTool-12.26.tar.gz
+        sha256: ed9f3285e263636c713ab52fcfb55cbcf4becd6c6e04bda410c8f240996ece9e
         x-checker-data:
           type: html
           url: https://exiftool.org/rss.xml
@@ -65,11 +81,22 @@ modules:
 
   - name: poppler
     buildsystem: cmake
+    config-opts:
+      - "-DENABLE_SPLASH=OFF"
+      - "-DBUILD_GTK_TESTS=OFF"
+      - "-DBUILD_QT5_TESTS=OFF"
+      - "-DBUILD_QT6_TESTS=OFF"
+      - "-DBUILD_CPP_TESTS=OFF"
+      - "-DBUILD_MANUAL_TESTS=OFF"
+      - "-DENABLE_CPP=OFF"
+      - "-DENABLE_UTILS=OFF"
+      - "-DENABLE_QT5=OFF"
+      - "-DENABLE_QT6=OFF"
     sources:
       - type: git
         url: https://anongit.freedesktop.org/git/poppler/poppler.git
-        tag: poppler-21.05.0
-        commit: 7961ff99df6db70319548b07249194cabfc74783
+        tag: poppler-21.06.0
+        commit: 07edd3d3933549578f91f5744ea5d82feadeb3f6
         x-checker-data:
           type: git
           tag-pattern: ^poppler-([\d\.]+)$

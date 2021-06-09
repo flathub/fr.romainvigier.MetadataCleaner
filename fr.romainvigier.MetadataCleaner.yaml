@@ -72,8 +72,8 @@ modules:
       - make install
     sources:
       - type: archive
-        url: https://exiftool.org/Image-ExifTool-12.26.tar.gz
-        sha256: ed9f3285e263636c713ab52fcfb55cbcf4becd6c6e04bda410c8f240996ece9e
+        url: https://exiftool.org/Image-ExifTool-12.27.tar.gz
+        sha256: 37b15ff90714e094b8247b857df768ac5fd2739674c1fe1fe38a0b7da5404a81
         x-checker-data:
           type: html
           url: https://exiftool.org/rss.xml
@@ -82,16 +82,16 @@ modules:
   - name: poppler
     buildsystem: cmake
     config-opts:
-      - "-DENABLE_SPLASH=OFF"
-      - "-DBUILD_GTK_TESTS=OFF"
-      - "-DBUILD_QT5_TESTS=OFF"
-      - "-DBUILD_QT6_TESTS=OFF"
-      - "-DBUILD_CPP_TESTS=OFF"
-      - "-DBUILD_MANUAL_TESTS=OFF"
-      - "-DENABLE_CPP=OFF"
-      - "-DENABLE_UTILS=OFF"
-      - "-DENABLE_QT5=OFF"
-      - "-DENABLE_QT6=OFF"
+      - -DENABLE_SPLASH=OFF
+      - -DBUILD_GTK_TESTS=OFF
+      - -DBUILD_QT5_TESTS=OFF
+      - -DBUILD_QT6_TESTS=OFF
+      - -DBUILD_CPP_TESTS=OFF
+      - -DBUILD_MANUAL_TESTS=OFF
+      - -DENABLE_CPP=OFF
+      - -DENABLE_UTILS=OFF
+      - -DENABLE_QT5=OFF
+      - -DENABLE_QT6=OFF
     sources:
       - type: git
         url: https://anongit.freedesktop.org/git/poppler/poppler.git

@@ -73,8 +73,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/exiftool/exiftool.git
-        tag: '12.28'
-        commit: 11f9b77c6de851baea89fb24e56acadca64c0112
+        tag: '12.30'
+        commit: 57f44297961839f40e70d682865c41828b7f71b5
         x-checker-data:
           type: git
           tag-pattern: ^(\d+\.\d+[02468])$
@@ -130,8 +130,8 @@ modules:
     sources:
       - type: git
         url: https://0xacab.org/jvoisin/mat2.git
-        tag: 0.12.1
-        commit: c5841a241dcf737599422e34a99d8001f974d13a
+        tag: 0.12.2
+        commit: d4479d9baa8e5383d16c19c34ef534a2c396cc12
         x-checker-data:
           type: git
           tag-pattern: ^([\d\.]+)$

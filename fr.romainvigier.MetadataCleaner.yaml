@@ -1,8 +1,15 @@
 app-id: fr.romainvigier.MetadataCleaner
 runtime: org.gnome.Platform
-runtime-version: '40'
+runtime-version: '41'
 sdk: org.gnome.Sdk
 command: metadata-cleaner
+
+add-extensions:
+  org.freedesktop.Platform.ffmpeg-full:
+    directory: lib/ffmpeg
+    add-ld-path: '.'
+    version: '21.08'
+
 finish-args:
   - --socket=wayland
   - --socket=fallback-x11
@@ -19,143 +26,185 @@ cleanup:
 
 modules:
 
-  - name: ffmpeg
-    buildsystem: autotools
-    config-opts:
-      - --disable-ffplay
-      - --disable-ffprobe
-      - --disable-doc
-      - --disable-htmlpages
-      - --disable-manpages
-      - --disable-podpages
-      - --disable-txtpages
-      - --disable-decoders
-      - --disable-encoders
-      - --disable-parsers
-      - --disable-bsfs
-      - --disable-protocols
-      - --enable-protocol=file
-      - --disable-devices
-      - --disable-filters
-    sources:
-      - type: git
-        url: https://git.ffmpeg.org/ffmpeg.git
-        tag: n4.4
-        commit: dc91b913b6260e85e1304c74ff7bb3c22a8c9fb1
-        x-checker-data:
-          type: git
-          tag-pattern: ^n([\d\.]+)$
-
-  - name: perl
-    buildsystem: simple
-    build-commands:
-      - ./Configure -des -Dprefix=$FLATPAK_DEST -Dman1dir=none -Dman3dir=none
-      - make
-      - make install
-    post-install:
-      # Fix wrong permissions
-      - chmod -R u+w $FLATPAK_DEST/lib/perl5
-    sources:
-      - type: git
-        url: https://github.com/Perl/perl5.git
-        tag: v5.34.0
-        commit: 79a7b254d85a10b65126ad99bf10e70480569d68
-        disable-fsckobjects: true
-        x-checker-data:
-          type: git
-          tag-pattern: ^v(\d+\.\d+[02468].\d+)$
-
-  - name: exiftool
-    buildsystem: simple
-    build-commands:
-      - perl Makefile.PL
-      - make install
-    sources:
-      - type: git
-        url: https://github.com/exiftool/exiftool.git
-        tag: '12.28'
-        commit: 11f9b77c6de851baea89fb24e56acadca64c0112
-        x-checker-data:
-          type: git
-          tag-pattern: ^(\d+\.\d+[02468])$
-
-  - name: poppler
-    buildsystem: cmake
-    config-opts:
-      - -DENABLE_BOOST=OFF
-      - -DENABLE_SPLASH=OFF
-      - -DBUILD_GTK_TESTS=OFF
-      - -DBUILD_QT5_TESTS=OFF
-      - -DBUILD_QT6_TESTS=OFF
-      - -DBUILD_CPP_TESTS=OFF
-      - -DBUILD_MANUAL_TESTS=OFF
-      - -DENABLE_CPP=OFF
-      - -DENABLE_UTILS=OFF
-      - -DENABLE_QT5=OFF
-      - -DENABLE_QT6=OFF
-    sources:
-      - type: git
-        url: https://anongit.freedesktop.org/git/poppler/poppler.git
-        tag: poppler-21.08.0
-        commit: 4aaabeca58ebf0d398975b5569610651e451b542
-        x-checker-data:
-          type: git
-          tag-pattern: ^poppler-([\d\.]+)$
-
-  - name: python3-mutagen
-    buildsystem: simple
-    build-commands:
-      - python3 setup.py build
-      - python3 setup.py install --optimize=1 --single-version-externally-managed
-        --prefix=$FLATPAK_DEST --root=/
-    ensure-writable:
-      - /lib/python3*/site-packages/easy-install.pth
-    sources:
-      - type: git
-        url: https://github.com/quodlibet/mutagen.git
-        tag: release-1.45.1
-        commit: 07108702b18d373d883ee9a36d2dd1066e621a0c
-        x-checker-data:
-          type: git
-          tag-pattern: ^release-([\d\.]+)$
-
-  - name: python3-libmat2
-    buildsystem: simple
-    build-commands:
-      - python3 setup.py build
-      - python3 setup.py install --optimize=1 --single-version-externally-managed
-        --prefix=$FLATPAK_DEST --root=/
-    ensure-writable:
-      - /lib/python3*/site-packages/easy-install.pth
-    sources:
-      - type: git
-        url: https://0xacab.org/jvoisin/mat2.git
-        tag: 0.12.1
-        commit: c5841a241dcf737599422e34a99d8001f974d13a
-        x-checker-data:
-          type: git
-          tag-pattern: ^([\d\.]+)$
-
-  - name: media-types
-    buildsystem: simple
-    build-commands:
-      - install -D mime.types $FLATPAK_DEST/share/
-    sources:
-      - type: git
-        url: https://salsa.debian.org/debian/media-types.git
-        tag: 4.0.0
-        commit: 0693ea7ac0d276c9c8dbae86e1b6c011443d7078
-        x-checker-data:
-          type: git
-          tag-pattern: ^([\d\.]+)$
-
   - name: metadata-cleaner
     buildsystem: meson
     sources:
       - type: git
         url: https://gitlab.com/rmnvgr/metadata-cleaner.git
-        tag: v1.0.8
-        commit: 5db9ef783ea82dbab1e6c2e570316815df9b54ed
+        tag: v2.0.0
+        commit: 9ead6722c6fde8c02cfda0e2e2af4a450236b3cf
         x-checker-data:
           type: git
           tag-pattern: ^v([\d\.]+)$
+    modules:
+      - name: media-types
+        buildsystem: simple
+        build-commands:
+          - mkdir -p $FLATPAK_DEST/share
+          - install -D mime.types $FLATPAK_DEST/share/
+        sources:
+          - type: git
+            url: https://salsa.debian.org/debian/media-types.git
+            tag: 4.0.0
+            commit: 0693ea7ac0d276c9c8dbae86e1b6c011443d7078
+            x-checker-data:
+              type: git
+              tag-pattern: ^n([\d\.]+)$
+
+      - name: python3-libmat2
+        buildsystem: simple
+        build-commands:
+          - python3 setup.py build
+          - python3 setup.py install --optimize=1 --single-version-externally-managed --prefix=$FLATPAK_DEST --root=/
+        ensure-writable:
+          - /lib/python3*/site-packages/easy-install.pth
+        sources:
+          - type: git
+            url: https://0xacab.org/jvoisin/mat2.git
+            tag: 0.12.2
+            commit: d4479d9baa8e5383d16c19c34ef534a2c396cc12
+            x-checker-data:
+              type: git
+              tag-pattern: ^([\d\.]+)$
+        modules:
+          - name: exiftool
+            buildsystem: simple
+            build-commands:
+              - perl Makefile.PL
+              - make install
+            cleanup:
+              - '*.pod'
+            sources:
+              - type: git
+                url: https://github.com/exiftool/exiftool.git
+                tag: '12.30'
+                commit: 57f44297961839f40e70d682865c41828b7f71b5
+                x-checker-data:
+                  type: git
+                  tag-pattern: ^(\d+\.\d+[02468])$
+            modules:
+              - name: perl
+                buildsystem: simple
+                build-commands:
+                  - ./Configure -des -Dprefix=$FLATPAK_DEST -Dman1dir=none -Dman3dir=none
+                  - make
+                  - make install
+                post-install:
+                  # Fix wrong permissions
+                  - chmod -R u+w $FLATPAK_DEST/lib/perl5
+                cleanup:
+                  - /bin/corelist
+                  - /bin/cpan
+                  - /bin/enc2xs
+                  - /bin/encguess
+                  - /bin/h2ph
+                  - /bin/h2xs
+                  - /bin/instmodsh
+                  - /bin/json_pp
+                  - /bin/libnetcfg
+                  - /bin/perl5*
+                  - /bin/perlbug
+                  - /bin/perldoc
+                  - /bin/perlivp
+                  - /bin/perlthanks
+                  - /bin/piconv
+                  - /bin/pl2pm
+                  - /bin/pod2html
+                  - /bin/pod2man
+                  - /bin/pod2text
+                  - /bin/pod2usage
+                  - /bin/podchecker
+                  - /bin/prove
+                  - /bin/ptar
+                  - /bin/ptardiff
+                  - /bin/ptargrep
+                  - /bin/shasum
+                  - /bin/splain
+                  - /bin/streamzip
+                  - /bin/xsubpp
+                  - /bin/zipdetails
+                  - '*.pod'
+                sources:
+                  - type: git
+                    url: https://github.com/Perl/perl5.git
+                    tag: v5.34.0
+                    commit: 79a7b254d85a10b65126ad99bf10e70480569d68
+                    disable-fsckobjects: true
+                    x-checker-data:
+                      type: git
+                      tag-pattern: ^v(\d+\.\d+[02468].\d+)$
+
+          - name: poppler
+            buildsystem: cmake
+            config-opts:
+              - -DENABLE_BOOST=OFF
+              - -DENABLE_SPLASH=OFF
+              - -DBUILD_GTK_TESTS=OFF
+              - -DBUILD_QT5_TESTS=OFF
+              - -DBUILD_QT6_TESTS=OFF
+              - -DBUILD_CPP_TESTS=OFF
+              - -DBUILD_MANUAL_TESTS=OFF
+              - -DENABLE_CPP=OFF
+              - -DENABLE_UTILS=OFF
+              - -DENABLE_QT5=OFF
+              - -DENABLE_QT6=OFF
+            sources:
+              - type: git
+                url: https://gitlab.freedesktop.org/poppler/poppler.git
+                tag: poppler-21.09.0
+                commit: f70e352429e3b565262251b1150e77e8638bed6c
+                x-checker-data:
+                  type: git
+                  tag-pattern: ^poppler-([\d\.]+)$
+
+          - name: python3-mutagen
+            buildsystem: simple
+            build-commands:
+              - python3 setup.py build
+              - python3 setup.py install --optimize=1 --single-version-externally-managed --prefix=$FLATPAK_DEST --root=/
+            ensure-writable:
+              - /lib/python3*/site-packages/easy-install.pth
+            cleanup:
+              - /bin/mid3cp
+              - /bin/mid3iconv
+              - /bin/mid3v2
+              - /bin/moggsplit
+              - /bin/mutagen-inspect
+              - /bin/mutagen-pony
+            sources:
+              - type: git
+                url: https://github.com/quodlibet/mutagen.git
+                tag: release-1.45.1
+                commit: 07108702b18d373d883ee9a36d2dd1066e621a0c
+                x-checker-data:
+                  type: git
+                  tag-pattern: ^release-([\d\.]+)$
+
+      - name: libadwaita
+        buildsystem: meson
+        config-opts:
+          - -Dtests=false
+          - -Dexamples=false
+          - -Dgtk_doc=false
+          - -Dvapi=false
+        sources:
+          - type: git
+            url: https://gitlab.gnome.org/GNOME/libadwaita.git
+            commit: e2c030b8ab9e786f0793e5916864ff009d6391c1
+        modules:
+          - name: libsass
+            buildsystem: meson
+            sources:
+              - type: git
+                url: https://github.com/lazka/libsass.git
+                branch: meson
+            cleanup:
+              - '*'
+          - name: sassc
+            buildsystem: meson
+            sources:
+              - type: git
+                url: https://github.com/lazka/sassc.git
+                branch: meson
+            cleanup:
+              - '*'

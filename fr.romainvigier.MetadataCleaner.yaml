@@ -16,6 +16,9 @@ finish-args:
   - --share=ipc
   - --device=dri
 
+cleanup-commands:
+  - mkdir -p $FLATPAK_DEST/lib/ffmpeg
+
 cleanup:
   - /include
   - /lib/pkgconfig

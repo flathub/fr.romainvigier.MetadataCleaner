@@ -7,7 +7,7 @@ command: metadata-cleaner
 add-extensions:
   org.freedesktop.Platform.ffmpeg-full:
     directory: lib/ffmpeg
-    add-ld-path: '.'
+    add-ld-path: .
     version: '21.08'
 
 finish-args:
@@ -34,8 +34,8 @@ modules:
     sources:
       - type: git
         url: https://gitlab.com/rmnvgr/metadata-cleaner.git
-        tag: v2.0.0
-        commit: 9ead6722c6fde8c02cfda0e2e2af4a450236b3cf
+        tag: v2.0.1
+        commit: c907b0d62126425ca268ce8857ca0ceb13e39b6c
         x-checker-data:
           type: git
           tag-pattern: ^v([\d\.]+)$
@@ -58,7 +58,8 @@ modules:
         buildsystem: simple
         build-commands:
           - python3 setup.py build
-          - python3 setup.py install --optimize=1 --single-version-externally-managed --prefix=$FLATPAK_DEST --root=/
+          - python3 setup.py install --optimize=1 --single-version-externally-managed
+            --prefix=$FLATPAK_DEST --root=/
         ensure-writable:
           - /lib/python3*/site-packages/easy-install.pth
         sources:
@@ -164,7 +165,8 @@ modules:
             buildsystem: simple
             build-commands:
               - python3 setup.py build
-              - python3 setup.py install --optimize=1 --single-version-externally-managed --prefix=$FLATPAK_DEST --root=/
+              - python3 setup.py install --optimize=1 --single-version-externally-managed
+                --prefix=$FLATPAK_DEST --root=/
             ensure-writable:
               - /lib/python3*/site-packages/easy-install.pth
             cleanup:

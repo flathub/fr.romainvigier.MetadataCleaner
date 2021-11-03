@@ -34,8 +34,8 @@ modules:
     sources:
       - type: git
         url: https://gitlab.com/rmnvgr/metadata-cleaner.git
-        tag: v2.0.1
-        commit: c907b0d62126425ca268ce8857ca0ceb13e39b6c
+        tag: v2.1.0
+        commit: ee5e8d03377c5783bb00a33f8351b120649a0e77
         x-checker-data:
           type: git
           tag-pattern: ^v([\d\.]+)$
@@ -52,7 +52,7 @@ modules:
             commit: 0693ea7ac0d276c9c8dbae86e1b6c011443d7078
             x-checker-data:
               type: git
-              tag-pattern: ^n([\d\.]+)$
+              tag-pattern: ^([\d\.]+)$
 
       - name: python3-libmat2
         buildsystem: simple
@@ -81,8 +81,8 @@ modules:
             sources:
               - type: git
                 url: https://github.com/exiftool/exiftool.git
-                tag: '12.30'
-                commit: 57f44297961839f40e70d682865c41828b7f71b5
+                tag: '12.34'
+                commit: 15e88b0fcedb10f6348610b562725e4dfcf2b3e1
                 x-checker-data:
                   type: git
                   tag-pattern: ^(\d+\.\d+[02468])$
@@ -155,8 +155,8 @@ modules:
             sources:
               - type: git
                 url: https://gitlab.freedesktop.org/poppler/poppler.git
-                tag: poppler-21.09.0
-                commit: f70e352429e3b565262251b1150e77e8638bed6c
+                tag: poppler-21.11.0
+                commit: 76f4d2e764f0fdb089678d1db3967391eb2f4077
                 x-checker-data:
                   type: git
                   tag-pattern: ^poppler-([\d\.]+)$
@@ -195,8 +195,8 @@ modules:
         sources:
           - type: git
             url: https://gitlab.gnome.org/GNOME/libadwaita.git
-            tag: 1.0.0.alpha.3
-            commit: 40c19ab2591763a482ebc79c82f1da32eea3bab6
+            tag: 1.0.0.alpha.4
+            commit: 6b447fde8f270001a0dc29ef59d3e9bf6d32dae9
         modules:
           - name: libsass
             buildsystem: meson

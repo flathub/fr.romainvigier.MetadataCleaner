@@ -34,8 +34,8 @@ modules:
     sources:
       - type: git
         url: https://gitlab.com/rmnvgr/metadata-cleaner.git
-        tag: v2.1.1
-        commit: e852d3b2c0662146e9f6428f766e80abf43d5100
+        tag: v2.1.2
+        commit: 415d746d4b0faeea1e86e2f162d5adedd4bc2cd4
         x-checker-data:
           type: git
           tag-pattern: ^v([\d\.]+)$

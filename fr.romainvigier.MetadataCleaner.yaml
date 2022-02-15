@@ -34,8 +34,8 @@ modules:
     sources:
       - type: git
         url: https://gitlab.com/rmnvgr/metadata-cleaner.git
-        tag: v2.1.4
-        commit: 8a43f0a371e507d6001fc52648d3e763402869bd
+        tag: v2.1.5
+        commit: 3b43cdc39c02053bd18140b2ad7e72bd0e9317c6
         x-checker-data:
           type: git
           tag-pattern: ^v([\d\.]+)$
@@ -48,8 +48,8 @@ modules:
         sources:
           - type: git
             url: https://salsa.debian.org/debian/media-types.git
-            tag: 4.0.0
-            commit: 0693ea7ac0d276c9c8dbae86e1b6c011443d7078
+            tag: 5.0.0
+            commit: 7cfeacfc533d4148d89851f90e3a1d69e3ff697c
             x-checker-data:
               type: git
               tag-pattern: ^([\d\.]+)$
@@ -81,8 +81,8 @@ modules:
             sources:
               - type: git
                 url: https://github.com/exiftool/exiftool.git
-                tag: '12.38'
-                commit: 74dbab1d2766d6422bb05b033ac6634bf8d1f582
+                tag: '12.40'
+                commit: 537cba56936c21b729aeed404b117e31c3c6fed0
                 x-checker-data:
                   type: git
                   tag-pattern: ^(\d+\.\d+[02468])$
@@ -154,12 +154,23 @@ modules:
               - -DENABLE_QT6=OFF
             sources:
               - type: git
-                url: https://gitlab.freedesktop.org/poppler/poppler.git
-                tag: poppler-22.01.0
-                commit: 16a34e9dfffa9ad1e32459bd05455f25b02a772f
+                url: https://anongit.freedesktop.org/git/poppler/poppler.git
+                tag: poppler-22.02.0
+                commit: 57c948fa0656ef3ec3cbf24581460da4a9441106
                 x-checker-data:
                   type: git
                   tag-pattern: ^poppler-([\d\.]+)$
+            modules:
+              - name: poppler-data
+                buildsystem: cmake
+                sources:
+                  - type: git
+                    url: https://anongit.freedesktop.org/git/poppler/poppler-data.git
+                    tag: POPPLER_DATA_0_4_10
+                    commit: a800b65669a69dd802877c1bd30dc3f5faf08c03
+                    x-checker-data:
+                      type: git
+                      tag-pattern: ^POPPLER_DATA_([\d_]+)$
 
           - name: python3-mutagen
             buildsystem: simple

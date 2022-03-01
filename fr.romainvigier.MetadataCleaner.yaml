@@ -155,8 +155,8 @@ modules:
             sources:
               - type: git
                 url: https://anongit.freedesktop.org/git/poppler/poppler.git
-                tag: poppler-22.02.0
-                commit: 57c948fa0656ef3ec3cbf24581460da4a9441106
+                tag: poppler-22.03.0
+                commit: 8e710e54806d85b901d6d3d3d79818b6e8e44b5d
                 x-checker-data:
                   type: git
                   tag-pattern: ^poppler-([\d\.]+)$

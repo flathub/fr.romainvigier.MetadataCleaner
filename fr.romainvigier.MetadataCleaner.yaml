@@ -48,8 +48,8 @@ modules:
         sources:
           - type: git
             url: https://salsa.debian.org/debian/media-types.git
-            tag: 5.0.0
-            commit: 7cfeacfc533d4148d89851f90e3a1d69e3ff697c
+            tag: 6.0.0
+            commit: 664c9f4f90eb4194b93095353c388639649ef732
             x-checker-data:
               type: git
               tag-pattern: ^([\d\.]+)$

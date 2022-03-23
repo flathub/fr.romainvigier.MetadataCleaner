@@ -1,6 +1,6 @@
 app-id: fr.romainvigier.MetadataCleaner
 runtime: org.gnome.Platform
-runtime-version: '41'
+runtime-version: '42'
 sdk: org.gnome.Sdk
 command: metadata-cleaner
 
@@ -34,8 +34,8 @@ modules:
     sources:
       - type: git
         url: https://gitlab.com/rmnvgr/metadata-cleaner.git
-        tag: v2.1.5
-        commit: 3b43cdc39c02053bd18140b2ad7e72bd0e9317c6
+        tag: v2.2.0
+        commit: 60c97b106ca1e99575361184fc0b4e7fbd47396e
         x-checker-data:
           type: git
           tag-pattern: ^v([\d\.]+)$
@@ -48,8 +48,8 @@ modules:
         sources:
           - type: git
             url: https://salsa.debian.org/debian/media-types.git
-            tag: 5.0.0
-            commit: 7cfeacfc533d4148d89851f90e3a1d69e3ff697c
+            tag: 7.0.0
+            commit: 580542eee95ce7bf19562802588ec701e398ba86
             x-checker-data:
               type: git
               tag-pattern: ^([\d\.]+)$
@@ -131,8 +131,8 @@ modules:
                 sources:
                   - type: git
                     url: https://github.com/Perl/perl5.git
-                    tag: v5.34.0
-                    commit: 79a7b254d85a10b65126ad99bf10e70480569d68
+                    tag: v5.34.1
+                    commit: 1181cf72936404b890ef41362f533fe2c2626f9b
                     disable-fsckobjects: true
                     x-checker-data:
                       type: git
@@ -155,8 +155,8 @@ modules:
             sources:
               - type: git
                 url: https://anongit.freedesktop.org/git/poppler/poppler.git
-                tag: poppler-22.02.0
-                commit: 57c948fa0656ef3ec3cbf24581460da4a9441106
+                tag: poppler-22.03.0
+                commit: 8e710e54806d85b901d6d3d3d79818b6e8e44b5d
                 x-checker-data:
                   type: git
                   tag-pattern: ^poppler-([\d\.]+)$
@@ -166,8 +166,8 @@ modules:
                 sources:
                   - type: git
                     url: https://anongit.freedesktop.org/git/poppler/poppler-data.git
-                    tag: POPPLER_DATA_0_4_10
-                    commit: a800b65669a69dd802877c1bd30dc3f5faf08c03
+                    tag: POPPLER_DATA_0_4_11
+                    commit: 0ea8e08c257f58cc967f7da59e2d0eac20f1b455
                     x-checker-data:
                       type: git
                       tag-pattern: ^POPPLER_DATA_([\d_]+)$
@@ -195,33 +195,3 @@ modules:
                 x-checker-data:
                   type: git
                   tag-pattern: ^release-([\d\.]+)$
-
-      - name: libadwaita
-        buildsystem: meson
-        config-opts:
-          - -Dtests=false
-          - -Dexamples=false
-          - -Dgtk_doc=false
-          - -Dvapi=false
-        sources:
-          - type: git
-            url: https://gitlab.gnome.org/GNOME/libadwaita.git
-            tag: 1.0.0.alpha.4
-            commit: 6b447fde8f270001a0dc29ef59d3e9bf6d32dae9
-        modules:
-          - name: libsass
-            buildsystem: meson
-            sources:
-              - type: git
-                url: https://github.com/lazka/libsass.git
-                branch: meson
-            cleanup:
-              - '*'
-          - name: sassc
-            buildsystem: meson
-            sources:
-              - type: git
-                url: https://github.com/lazka/sassc.git
-                branch: meson
-            cleanup:
-              - '*'

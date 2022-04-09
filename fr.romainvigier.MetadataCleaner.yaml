@@ -48,8 +48,8 @@ modules:
         sources:
           - type: git
             url: https://salsa.debian.org/debian/media-types.git
-            tag: 7.0.0
-            commit: 580542eee95ce7bf19562802588ec701e398ba86
+            tag: 7.1.0
+            commit: 3fd6c3d8db696261e788090b79131169b4ef04cb
             x-checker-data:
               type: git
               tag-pattern: ^([\d\.]+)$
@@ -155,8 +155,8 @@ modules:
             sources:
               - type: git
                 url: https://anongit.freedesktop.org/git/poppler/poppler.git
-                tag: poppler-22.03.0
-                commit: 8e710e54806d85b901d6d3d3d79818b6e8e44b5d
+                tag: poppler-22.04.0
+                commit: bd6f20a62131baafcae40cbdb8475116f666f84f
                 x-checker-data:
                   type: git
                   tag-pattern: ^poppler-([\d\.]+)$

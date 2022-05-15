@@ -48,8 +48,8 @@ modules:
         sources:
           - type: git
             url: https://salsa.debian.org/debian/media-types.git
-            tag: 7.1.0
-            commit: 3fd6c3d8db696261e788090b79131169b4ef04cb
+            tag: 8.0.0
+            commit: cc3ae23eb896a9f8673b213f5e46d5ca7919fc1d
             x-checker-data:
               type: git
               tag-pattern: ^([\d\.]+)$
@@ -65,8 +65,8 @@ modules:
         sources:
           - type: git
             url: https://0xacab.org/jvoisin/mat2.git
-            tag: 0.12.3
-            commit: e5dcd39225e165897d69c7400ebc57ab1b4449bc
+            tag: 0.12.4
+            commit: b18e6e11f073ee91616b300f76b19a83ac7766a0
             x-checker-data:
               type: git
               tag-pattern: ^([\d\.]+)$
@@ -155,8 +155,8 @@ modules:
             sources:
               - type: git
                 url: https://anongit.freedesktop.org/git/poppler/poppler.git
-                tag: poppler-22.04.0
-                commit: bd6f20a62131baafcae40cbdb8475116f666f84f
+                tag: poppler-22.05.0
+                commit: d2dd9c322542eb7ea9e3e0b8324b33b3af9d8b1e
                 x-checker-data:
                   type: git
                   tag-pattern: ^poppler-([\d\.]+)$

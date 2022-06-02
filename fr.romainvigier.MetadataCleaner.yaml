@@ -34,8 +34,8 @@ modules:
     sources:
       - type: git
         url: https://gitlab.com/rmnvgr/metadata-cleaner.git
-        tag: v2.2.2
-        commit: a2882d01d8003a58119531e844ae698136fa2210
+        tag: v2.2.3
+        commit: d673ba89c93793eff2279354b83532d26b6b941f
         x-checker-data:
           type: git
           tag-pattern: ^v([\d\.]+)$
@@ -81,8 +81,8 @@ modules:
             sources:
               - type: git
                 url: https://github.com/exiftool/exiftool.git
-                tag: '12.40'
-                commit: 537cba56936c21b729aeed404b117e31c3c6fed0
+                tag: '12.42'
+                commit: 48df8aae22faa33d830dcf2ecdf406998b4d3849
                 x-checker-data:
                   type: git
                   tag-pattern: ^(\d+\.\d+[02468])$
@@ -131,8 +131,8 @@ modules:
                 sources:
                   - type: git
                     url: https://github.com/Perl/perl5.git
-                    tag: v5.34.1
-                    commit: 1181cf72936404b890ef41362f533fe2c2626f9b
+                    tag: v5.36.0
+                    commit: b3c502b607191da0e743a4fa34501a05442305b3
                     disable-fsckobjects: true
                     x-checker-data:
                       type: git
@@ -155,8 +155,8 @@ modules:
             sources:
               - type: git
                 url: https://anongit.freedesktop.org/git/poppler/poppler.git
-                tag: poppler-22.05.0
-                commit: d2dd9c322542eb7ea9e3e0b8324b33b3af9d8b1e
+                tag: poppler-22.06.0
+                commit: 32fa2888eaaaaf80e5d2338cb8cb8b773ccfd4d3
                 x-checker-data:
                   type: git
                   tag-pattern: ^poppler-([\d\.]+)$

@@ -190,8 +190,8 @@ modules:
             sources:
               - type: git
                 url: https://github.com/quodlibet/mutagen.git
-                tag: release-1.45.1
-                commit: 07108702b18d373d883ee9a36d2dd1066e621a0c
+                tag: release-1.46.0
+                commit: 5b967acd2392b44a5c21d6a4c34bf624c9aa3fe9
                 x-checker-data:
                   type: git
                   tag-pattern: ^release-([\d\.]+)$

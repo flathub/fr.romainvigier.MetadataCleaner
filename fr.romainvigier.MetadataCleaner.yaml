@@ -34,8 +34,8 @@ modules:
     sources:
       - type: git
         url: https://gitlab.com/rmnvgr/metadata-cleaner.git
-        tag: v2.2.7
-        commit: e30b5ad72c9615734a368baf3276455661d0a789
+        tag: v2.2.8
+        commit: 8e58c5dbd7af2c2c7088e37a7c778f8aa408f42d
         x-checker-data:
           type: git
           tag-pattern: ^v([\d\.]+)$
@@ -81,8 +81,8 @@ modules:
             sources:
               - type: git
                 url: https://github.com/exiftool/exiftool.git
-                tag: '12.50'
-                commit: 7368629751669ba170511419b3d1e05bf0076d0e
+                tag: '12.52'
+                commit: ac4151014c3d9b7d15ebd3bdfdc01405492a05ee
                 x-checker-data:
                   type: git
                   tag-pattern: ^(\d+\.\d+[02468])$
@@ -155,8 +155,8 @@ modules:
             sources:
               - type: git
                 url: https://anongit.freedesktop.org/git/poppler/poppler.git
-                tag: poppler-22.11.0
-                commit: cc665f757af6b87dd245d36e079dd44d8d2d2182
+                tag: poppler-22.12.0
+                commit: df568263c51950ceed6f1fb42f80e99a2614c275
                 x-checker-data:
                   type: git
                   tag-pattern: ^poppler-([\d\.]+)$

@@ -34,8 +34,8 @@ modules:
     sources:
       - type: git
         url: https://gitlab.com/rmnvgr/metadata-cleaner.git
-        tag: v2.2.8
-        commit: 8e58c5dbd7af2c2c7088e37a7c778f8aa408f42d
+        tag: v2.3.0
+        commit: eae5321b575533f630a3103629ea267546a75e8a
         x-checker-data:
           type: git
           tag-pattern: ^v([\d\.]+)$
@@ -81,8 +81,8 @@ modules:
             sources:
               - type: git
                 url: https://github.com/exiftool/exiftool.git
-                tag: '12.52'
-                commit: ac4151014c3d9b7d15ebd3bdfdc01405492a05ee
+                tag: '12.54'
+                commit: 58945644aba8a0847fffa901f12abe8140dac48b
                 x-checker-data:
                   type: git
                   tag-pattern: ^(\d+\.\d+[02468])$

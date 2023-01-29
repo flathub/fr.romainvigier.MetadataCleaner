@@ -48,8 +48,8 @@ modules:
         sources:
           - type: git
             url: https://salsa.debian.org/debian/media-types.git
-            tag: 8.0.0
-            commit: cc3ae23eb896a9f8673b213f5e46d5ca7919fc1d
+            tag: 9.0.0
+            commit: 649544a00ba558e9b001882ca9c7ca0fdd0e0c26
             x-checker-data:
               type: git
               tag-pattern: ^([\d\.]+)$
@@ -65,8 +65,8 @@ modules:
         sources:
           - type: git
             url: https://0xacab.org/jvoisin/mat2.git
-            tag: 0.13.1
-            commit: 2b02c82e7fd433635932ec8ece7ba4a46bcfa928
+            tag: 0.13.2
+            commit: 66a36f6b15b0a9fdc792aabe3d0956b3fc680464
             x-checker-data:
               type: git
               tag-pattern: ^([\d\.]+)$

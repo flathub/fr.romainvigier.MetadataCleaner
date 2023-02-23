@@ -65,8 +65,8 @@ modules:
         sources:
           - type: git
             url: https://0xacab.org/jvoisin/mat2.git
-            tag: 0.13.2
-            commit: 66a36f6b15b0a9fdc792aabe3d0956b3fc680464
+            tag: 0.13.3
+            commit: b1c03bce72e3e22dc9baa04c40dbbd3fb97bc893
             x-checker-data:
               type: git
               tag-pattern: ^([\d\.]+)$

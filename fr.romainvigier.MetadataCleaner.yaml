@@ -83,8 +83,8 @@ modules:
             sources:
               - type: git
                 url: https://github.com/exiftool/exiftool.git
-                tag: '12.58'
-                commit: 4e32ffefc5bd393a692a1ad375c966a883b20291
+                tag: '12.60'
+                commit: 9b5614aa26a09d79a7336f136414d38a8b3f8977
                 x-checker-data:
                   type: git
                   tag-pattern: ^(\d+\.\d+[02468])$
@@ -157,8 +157,8 @@ modules:
             sources:
               - type: git
                 url: https://anongit.freedesktop.org/git/poppler/poppler.git
-                tag: poppler-23.03.0
-                commit: 051c2601ecc35864cad6172db8387b64951cf859
+                tag: poppler-23.04.0
+                commit: 4c6da80ab5a54df72c0243d32a3976b683441d5e
                 x-checker-data:
                   type: git
                   tag-pattern: ^poppler-([\d\.]+)$

@@ -34,8 +34,8 @@ modules:
     sources:
       - type: git
         url: https://gitlab.com/rmnvgr/metadata-cleaner.git
-        tag: v2.5.2
-        commit: 62a400a96099d947502611a1b9bc67f7f48a675a
+        tag: v2.5.3
+        commit: faba08e717e608185669aab86245ad40f2102586
         x-checker-data:
           type: git
           tag-pattern: ^v([\d\.]+)$
@@ -48,8 +48,8 @@ modules:
         sources:
           - type: git
             url: https://salsa.debian.org/debian/media-types.git
-            tag: 10.0.0
-            commit: 4ef946d251287545a1498345bc08b587da85a316
+            tag: 10.1.0
+            commit: a646d47b7e849a9008e4f20f8078873f0c8e2c5a
             x-checker-data:
               type: git
               tag-pattern: ^([\d\.]+)$
@@ -65,8 +65,8 @@ modules:
         sources:
           - type: git
             url: https://0xacab.org/jvoisin/mat2.git
-            tag: 0.13.3
-            commit: b1c03bce72e3e22dc9baa04c40dbbd3fb97bc893
+            tag: 0.13.4
+            commit: 04786d75dab33bc292067a114c075f403719bfac
             x-checker-data:
               type: git
               tag-pattern: ^([\d\.]+)$
@@ -83,8 +83,8 @@ modules:
             sources:
               - type: git
                 url: https://github.com/exiftool/exiftool.git
-                tag: '12.62'
-                commit: a2f26dc90ab031c687b5730cb1e6dffb35e3e029
+                tag: '12.64'
+                commit: d35e9e26e0a8b443dae307f55d0a4a067d311a16
                 x-checker-data:
                   type: git
                   tag-pattern: ^(\d+\.\d+[02468])$
@@ -133,8 +133,8 @@ modules:
                 sources:
                   - type: git
                     url: https://github.com/Perl/perl5.git
-                    tag: v5.36.1
-                    commit: 42e3343be621a2b9cdb98befd92de43cc0b7ef3e
+                    tag: v5.38.0
+                    commit: 76298ae68aa7796f0ffc05095b127d23f4b2de8f
                     disable-fsckobjects: true
                     x-checker-data:
                       type: git
@@ -157,8 +157,8 @@ modules:
             sources:
               - type: git
                 url: https://anongit.freedesktop.org/git/poppler/poppler.git
-                tag: poppler-23.05.0
-                commit: adf710eecf475dd7c64d7b904f7414ec3098491f
+                tag: poppler-23.08.0
+                commit: 6e96ac9d2f5003e27bb2772ea71d76f0d2c30ebe
                 x-checker-data:
                   type: git
                   tag-pattern: ^poppler-([\d\.]+)$

@@ -70,8 +70,6 @@ modules:
             x-checker-data:
               type: git
               tag-pattern: ^([\d\.]+)$
-          - type: patch
-            path: mat2-fix-version.patch
         modules:
           - name: exiftool
             buildsystem: simple

@@ -155,8 +155,8 @@ modules:
             sources:
               - type: git
                 url: https://anongit.freedesktop.org/git/poppler/poppler.git
-                tag: poppler-23.08.0
-                commit: 6e96ac9d2f5003e27bb2772ea71d76f0d2c30ebe
+                tag: poppler-23.09.0
+                commit: 6e2c0fe0434cfadc3d161e7cd348212f644b725e
                 x-checker-data:
                   type: git
                   tag-pattern: ^poppler-([\d\.]+)$
@@ -166,8 +166,8 @@ modules:
                 sources:
                   - type: git
                     url: https://anongit.freedesktop.org/git/poppler/poppler-data.git
-                    tag: POPPLER_DATA_0_4_11
-                    commit: 0ea8e08c257f58cc967f7da59e2d0eac20f1b455
+                    tag: POPPLER_DATA_0_4_12
+                    commit: af9f452b427d5ce8abe81ff98cc40c5f39fad90b
                     x-checker-data:
                       type: git
                       tag-pattern: ^POPPLER_DATA_([\d_]+)$
@@ -190,8 +190,8 @@ modules:
             sources:
               - type: git
                 url: https://github.com/quodlibet/mutagen.git
-                tag: release-1.46.0
-                commit: 5b967acd2392b44a5c21d6a4c34bf624c9aa3fe9
+                tag: release-1.47.0
+                commit: e38a475b4e00e248e04c50901d75b526464550d3
                 x-checker-data:
                   type: git
                   tag-pattern: ^release-([\d\.]+)$

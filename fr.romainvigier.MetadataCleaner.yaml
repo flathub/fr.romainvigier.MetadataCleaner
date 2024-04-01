@@ -65,11 +65,12 @@ modules:
         sources:
           - type: git
             url: https://0xacab.org/jvoisin/mat2.git
-            tag: 0.13.4
-            commit: 04786d75dab33bc292067a114c075f403719bfac
-            x-checker-data:
-              type: git
-              tag-pattern: ^([\d\.]+)$
+            # Needed to fix sandboxing issue, switch back to tags on the next release
+            branch: master
+            commit: 94ef57c9941d56dff3a5f669dcfc5ba17f88d056
+            # x-checker-data:
+            #   type: git
+            #   tag-pattern: ^([\d\.]+)$
         modules:
           - name: exiftool
             buildsystem: simple

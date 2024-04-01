@@ -81,8 +81,8 @@ modules:
             sources:
               - type: git
                 url: https://github.com/exiftool/exiftool.git
-                tag: '12.64'
-                commit: d35e9e26e0a8b443dae307f55d0a4a067d311a16
+                tag: '12.80'
+                commit: da736f3d8894b233dfa44a6b68d793b1fc78b0cb
                 x-checker-data:
                   type: git
                   tag-pattern: ^(\d+\.\d+[02468])$
@@ -131,8 +131,8 @@ modules:
                 sources:
                   - type: git
                     url: https://github.com/Perl/perl5.git
-                    tag: v5.38.0
-                    commit: 76298ae68aa7796f0ffc05095b127d23f4b2de8f
+                    tag: v5.38.2
+                    commit: 55dd2f792ffc8cefe614350a411f785374281b24
                     disable-fsckobjects: true
                     x-checker-data:
                       type: git
@@ -155,8 +155,8 @@ modules:
             sources:
               - type: git
                 url: https://anongit.freedesktop.org/git/poppler/poppler.git
-                tag: poppler-23.09.0
-                commit: 6e2c0fe0434cfadc3d161e7cd348212f644b725e
+                tag: poppler-24.04.0
+                commit: 0aa1fe5c30a6c467c91bad8d81bd6c2f57fcb726
                 x-checker-data:
                   type: git
                   tag-pattern: ^poppler-([\d\.]+)$

@@ -67,7 +67,7 @@ modules:
             url: https://0xacab.org/jvoisin/mat2.git
             # Needed to fix sandboxing issue, switch back to tags on the next release
             branch: master
-            commit: 94ef57c9941d56dff3a5f669dcfc5ba17f88d056
+            commit: a47ac01eb626859fda3a25996ed3d9665f6001fe
             # x-checker-data:
             #   type: git
             #   tag-pattern: ^([\d\.]+)$
@@ -82,8 +82,8 @@ modules:
             sources:
               - type: git
                 url: https://github.com/exiftool/exiftool.git
-                tag: '12.80'
-                commit: da736f3d8894b233dfa44a6b68d793b1fc78b0cb
+                tag: '12.86'
+                commit: c0d5125b3ce5dd684c4ec207192f0fd50fd61cb8
                 x-checker-data:
                   type: git
                   tag-pattern: ^(\d+\.\d+[02468])$
@@ -132,8 +132,8 @@ modules:
                 sources:
                   - type: git
                     url: https://github.com/Perl/perl5.git
-                    tag: v5.38.2
-                    commit: 55dd2f792ffc8cefe614350a411f785374281b24
+                    tag: v5.40.0
+                    commit: f22a16ecf4821b7e93d2569f630817a2631fddd9
                     disable-fsckobjects: true
                     x-checker-data:
                       type: git

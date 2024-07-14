@@ -1,0 +1,455 @@
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index a5136ec..8dc9339 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -95,3 +95,9 @@ tests:python3.11:
+   stage: test
+   script:
+     - python3 -m unittest discover -v
++
++tests:python3.12:
++  image: $CONTAINER_REGISTRY:python3.12
++  stage: test
++  script:
++    - python3 -m unittest discover -v
+diff --git a/INSTALL.md b/INSTALL.md
+index 2f96a4f..4b07b5d 100644
+--- a/INSTALL.md
++++ b/INSTALL.md
+@@ -19,7 +19,7 @@ installed, mat2 uses it to sandbox any external processes it invokes.
+ ## Arch Linux
+
+ Thanks to [kpcyrd](https://archlinux.org/packages/?maintainer=kpcyrd), there is an package available on
+-[Arch linux's AUR](https://archlinux.org/packages/community/any/mat2/).
++[Arch linux's AUR](https://archlinux.org/packages/extra/any/mat2/).
+
+ ## Debian
+
+diff --git a/libmat2/abstract.py b/libmat2/abstract.py
+index c531fbd..adf384a 100644
+--- a/libmat2/abstract.py
++++ b/libmat2/abstract.py
+@@ -34,7 +34,10 @@ class AbstractParser(abc.ABC):
+
+     @abc.abstractmethod
+     def get_meta(self) -> Dict[str, Union[str, Dict]]:
+-        """Return all the metadata of the current file"""
++        """Return all the metadata of the current file
++
++        :raises RuntimeError: Raised if the cleaning process went wrong.
++        """
+
+     @abc.abstractmethod
+     def remove_all(self) -> bool:
+diff --git a/libmat2/archive.py b/libmat2/archive.py
+index 5978846..13f9188 100644
+--- a/libmat2/archive.py
++++ b/libmat2/archive.py
+@@ -161,6 +161,7 @@ class ArchiveBasedAbstractParser(abstract.AbstractParser):
+
+                 member_parser, _ = parser_factory.get_parser(full_path)  # type: ignore
+                 if member_parser:
++                    member_parser.sandbox = self.sandbox
+                     local_meta = {**local_meta, **member_parser.get_meta()}
+
+                 if local_meta:
+@@ -248,6 +249,7 @@ class ArchiveBasedAbstractParser(abstract.AbstractParser):
+                             abort = True
+                             continue
+                     else:
++                        member_parser.sandbox = self.sandbox
+                         if member_parser.remove_all() is False:
+                             logging.warning("In file %s, something went wrong \
+                                              with the cleaning of %s \
+diff --git a/libmat2/audio.py b/libmat2/audio.py
+index 13ed291..2029d9c 100644
+--- a/libmat2/audio.py
++++ b/libmat2/audio.py
+@@ -82,6 +82,9 @@ class FLACParser(MutagenParser):
+             with open(fname, 'wb') as f:
+                 f.write(picture.data)
+             p, _ = parser_factory.get_parser(fname)  # type: ignore
++            if p is None:
++                raise ValueError
++            p.sandbox = self.sandbox
+             # Mypy chokes on ternaries :/
+             meta[name] = p.get_meta() if p else 'harmful data'  # type: ignore
+             os.remove(fname)
+diff --git a/libmat2/office.py b/libmat2/office.py
+index 74cc76a..f796932 100644
+--- a/libmat2/office.py
++++ b/libmat2/office.py
+@@ -38,7 +38,7 @@ def _sort_xml_attributes(full_path: str) -> bool:
+     for c in tree.getroot():
+         c[:] = sorted(c, key=lambda child: (child.tag, child.get('desc')))
+
+-    tree.write(full_path, xml_declaration=True)
++    tree.write(full_path, xml_declaration=True, encoding='utf-8')
+     return True
+
+
+@@ -147,7 +147,7 @@ class MSOfficeParser(ZipParser):
+             # Additional presentation-wide properties like printing properties,
+             # presentation show properties etc.
+             r'^(?:word|ppt|xl)/presProps\.xml$',
+-            r'^(?:word|ppt|xl)/comments[0-9]+\.xml$',
++            r'^(?:word|ppt|xl)/comments[0-9]*\.xml$',
+             r'^(?:word|ppt|xl)/threadedComments/threadedComment[0-9]*\.xml$',
+             r'^(?:word|ppt|xl)/commentsExtended\.xml$',
+             r'^(?:word|ppt|xl)/commentsExtensible\.xml$',
+@@ -220,7 +220,7 @@ class MSOfficeParser(ZipParser):
+         for element in elements_to_remove:
+             parent_map[element].remove(element)
+
+-        tree.write(full_path, xml_declaration=True)
++        tree.write(full_path, xml_declaration=True, encoding='utf-8')
+         return True
+
+     @staticmethod
+@@ -250,7 +250,7 @@ class MSOfficeParser(ZipParser):
+         for element in elements_to_remove:
+             parent_map[element].remove(element)
+
+-        tree.write(full_path, xml_declaration=True)
++        tree.write(full_path, xml_declaration=True, encoding='utf-8')
+         return True
+
+     @staticmethod
+@@ -287,7 +287,72 @@ class MSOfficeParser(ZipParser):
+             parent_map[element].insert(position, children)
+             parent_map[element].remove(element)
+
+-        tree.write(full_path, xml_declaration=True)
++        tree.write(full_path, xml_declaration=True, encoding='utf-8')
++        return True
++
++    @staticmethod
++    def __remove_document_comment_meta(full_path: str) -> bool:
++        try:
++            tree, namespace = _parse_xml(full_path)
++        except ET.ParseError as e:  # pragma: no cover
++            logging.error("Unable to parse %s: %s", full_path, e)
++            return False
++
++        # search the docs to see if we can bail early
++        range_start = tree.find('.//w:commentRangeStart', namespace)
++        range_end = tree.find('.//w:commentRangeEnd', namespace)
++        references = tree.find('.//w:commentReference', namespace)
++        if range_start is None and range_end is None and references is None:
++            return True  # No comment meta tags are present
++
++        parent_map = {c:p for p in tree.iter() for c in p}
++
++        # iterate over the elements and add them to list
++        elements_del = list()
++        for element in tree.iterfind('.//w:commentRangeStart', namespace):
++            elements_del.append(element)
++        for element in tree.iterfind('.//w:commentRangeEnd', namespace):
++            elements_del.append(element)
++        for element in tree.iterfind('.//w:commentReference', namespace):
++            elements_del.append(element)
++
++        # remove the elements
++        for element in elements_del:
++            parent_map[element].remove(element)
++
++        tree.write(full_path, xml_declaration=True, encoding='utf-8')
++        return True
++
++    def __remove_document_xml_rels_members(self, full_path: str) -> bool:
++        """ Remove the dangling references from the word/_rels/document.xml.rels file, since MS office doesn't like them.
++        """
++        try:
++            tree, namespace = _parse_xml(full_path)
++        except ET.ParseError as e:  # pragma: no cover
++            logging.error("Unable to parse %s: %s", full_path, e)
++            return False
++
++        if len(namespace.items()) != 1:  # pragma: no cover
++            logging.debug("Got several namespaces for Types: %s", namespace.items())
++
++        removed_fnames = set()
++        with zipfile.ZipFile(self.filename) as zin:
++            for fname in [item.filename for item in zin.infolist()]:
++                for file_to_omit in self.files_to_omit:
++                    if file_to_omit.search(fname):
++                        matches = map(lambda r: r.search(fname), self.files_to_keep)
++                        if any(matches):  # the file is in the allowlist
++                            continue
++                        removed_fnames.add(fname)
++                        break
++
++        root = tree.getroot()
++        for item in root.findall('{%s}Relationship' % namespace['']):
++            name = 'word/' + item.attrib['Target'] # add the word/ prefix to the path, since all document rels are in the word/ directory
++            if name in removed_fnames:
++                root.remove(item)
++
++        tree.write(full_path, xml_declaration=True, encoding='utf-8')
+         return True
+
+     def __remove_content_type_members(self, full_path: str) -> bool:
+@@ -320,7 +385,7 @@ class MSOfficeParser(ZipParser):
+             if name in removed_fnames:
+                 root.remove(item)
+
+-        tree.write(full_path, xml_declaration=True)
++        tree.write(full_path, xml_declaration=True, encoding='utf-8')
+         return True
+
+     def _final_checks(self) -> bool:
+@@ -355,7 +420,7 @@ class MSOfficeParser(ZipParser):
+
+         for item in tree.iterfind('.//p14:creationId', namespace):
+             item.set('val', '%s' % random.randint(0, 2**32))
+-        tree.write(full_path, xml_declaration=True)
++        tree.write(full_path, xml_declaration=True, encoding='utf-8')
+         return True
+
+     @staticmethod
+@@ -371,7 +436,7 @@ class MSOfficeParser(ZipParser):
+
+         for item in tree.iterfind('.//p:sldMasterId', namespace):
+             item.set('id', '%s' % random.randint(0, 2**32))
+-        tree.write(full_path, xml_declaration=True)
++        tree.write(full_path, xml_declaration=True, encoding='utf-8')
+         return True
+
+     def _specific_cleanup(self, full_path: str) -> bool:
+@@ -379,7 +444,7 @@ class MSOfficeParser(ZipParser):
+         if os.stat(full_path).st_size == 0:  # Don't process empty files
+             return True
+
+-        if not full_path.endswith('.xml'):
++        if not full_path.endswith(('.xml', '.xml.rels')):
+             return True
+
+         if self.__randomize_creationId(full_path) is False:
+@@ -396,6 +461,13 @@ class MSOfficeParser(ZipParser):
+             # this file contains the revisions
+             if self.__remove_revisions(full_path) is False:
+                 return False  # pragma: no cover
++            # remove comment references and ranges
++            if self.__remove_document_comment_meta(full_path) is False:
++                return False  # pragma: no cover
++        elif full_path.endswith('/word/_rels/document.xml.rels'):
++            # similar to the above, but for the document.xml.rels file
++            if self.__remove_document_xml_rels_members(full_path) is False:  # pragma: no cover
++                return False
+         elif full_path.endswith('/docProps/app.xml'):
+             # This file must be present and valid,
+             # so we're removing as much as we can.
+@@ -514,7 +586,7 @@ class LibreOfficeParser(ZipParser):
+             for changes in text.iterfind('.//text:tracked-changes', namespace):
+                 text.remove(changes)
+
+-        tree.write(full_path, xml_declaration=True)
++        tree.write(full_path, xml_declaration=True, encoding='utf-8')
+         return True
+
+     def _specific_cleanup(self, full_path: str) -> bool:
+diff --git a/libmat2/pdf.py b/libmat2/pdf.py
+index 8c3055f..ca94067 100644
+--- a/libmat2/pdf.py
++++ b/libmat2/pdf.py
+@@ -36,7 +36,10 @@ class PDFParser(abstract.AbstractParser):
+
+     def remove_all(self) -> bool:
+         if self.lightweight_cleaning is True:
+-            return self.__remove_all_lightweight()
++            try:
++                return self.__remove_all_lightweight()
++            except cairo.Error as e:
++                raise RuntimeError(e)
+         return self.__remove_all_thorough()
+
+     def __remove_all_lightweight(self) -> bool:
+diff --git a/mat2 b/mat2
+index e22512c..8bc08af 100755
+--- a/mat2
++++ b/mat2
+@@ -57,8 +57,8 @@ def create_arg_parser() -> argparse.ArgumentParser:
+                         ', '.join(p.value for p in UnknownMemberPolicy))
+     parser.add_argument('--inplace', action='store_true',
+                         help='clean in place, without backup')
+-    parser.add_argument('--no-sandbox', dest='sandbox', action='store_true',
+-                        default=False, help='Disable bubblewrap\'s sandboxing')
++    parser.add_argument('--no-sandbox', dest='sandbox', action='store_false',
++                        default=True, help='Disable bubblewrap\'s sandboxing')
+
+     excl_group = parser.add_mutually_exclusive_group()
+     excl_group.add_argument('files', nargs='*', help='the files to process',
+@@ -186,7 +186,7 @@ def main() -> int:
+     args = arg_parser.parse_args()
+
+     if args.verbose:
+-        logging.getLogger().setLevel(logging.DEBUG)
++        logging.getLogger(__name__).setLevel(logging.DEBUG)
+
+     if not args.files:
+         if args.list:
+diff --git a/pyproject.toml b/pyproject.toml
+index 02e510b..a52ee41 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,8 +1,19 @@
+ [project]
+-name = "mat"
++name = "mat2"
+ version = "0.13.4"
++description = "mat2 is a metadata removal tool, supporting a wide range of commonly used file formats, written in python3: at its core, it's a library, used by an eponymous command-line interface, as well as several file manager extensions."
+ readme = "README.md"
++license = {file = "LICENSE"}
+ requires-python = ">=3.9"
++dependencies = [
++        'mutagen',
++        'PyGObject',
++        'pycairo',
++]
++[project.urls]
++Repository = "https://0xacab.org/jvoisin/mat2"
++Issues = "https://0xacab.org/jvoisin/mat2/-/issues"
++Changelog = "https://0xacab.org/jvoisin/mat2/-/blob/master/CHANGELOG.md"
+
+ [tool.ruff]
+ target-version = "py39"
+diff --git a/setup.py b/setup.py
+index 356ca4b..bbdf1d9 100644
+--- a/setup.py
++++ b/setup.py
+@@ -20,7 +20,7 @@ setuptools.setup(
+         'pycairo',
+     ],
+     packages=setuptools.find_packages(exclude=('tests', )),
+-    data_files = [('man/man1', ['doc/mat2.1'])],
++    data_files = [('share/man/man1', ['doc/mat2.1'])],
+     classifiers=[
+         "Development Status :: 3 - Alpha",
+         "Environment :: Console",
+diff --git a/tests/data/comment.docx b/tests/data/comment.docx
+new file mode 100644
+index 0000000..c25485f
+Binary files /dev/null and b/tests/data/comment.docx differ
+diff --git a/tests/test_corrupted_files.py b/tests/test_corrupted_files.py
+index 2adf42e..639145c 100644
+--- a/tests/test_corrupted_files.py
++++ b/tests/test_corrupted_files.py
+@@ -14,7 +14,7 @@ from libmat2 import harmless, video, web, archive
+
+ # No need to logging messages, should something go wrong,
+ # the testsuite _will_ fail.
+-logger = logging.getLogger()
++logger = logging.getLogger(__name__)
+ logger.setLevel(logging.FATAL)
+
+
+diff --git a/tests/test_libmat2.py b/tests/test_libmat2.py
+index ee43fba..7855062 100644
+--- a/tests/test_libmat2.py
++++ b/tests/test_libmat2.py
+@@ -508,6 +508,7 @@ class TestCleaning(unittest.TestCase):
+                 'TrackID': 1,
+                 'TrackLayer': 0,
+                 'TransferCharacteristics': 'BT.709',
++                'VideoFullRangeFlag': 0,
+             },
+         },{
+             'name': 'wmv',
+@@ -857,3 +858,97 @@ class TestComplexOfficeFiles(unittest.TestCase):
+
+         os.remove(target)
+         os.remove(p.output_filename)
++
++class TextDocx(unittest.TestCase):
++    def test_comment_xml_is_removed(self):
++        with zipfile.ZipFile('./tests/data/comment.docx') as zipin:
++            # Check if 'word/comments.xml' exists in the zip
++            self.assertIn('word/comments.xml', zipin.namelist())
++
++        shutil.copy('./tests/data/comment.docx', './tests/data/comment_clean.docx')
++        p = office.MSOfficeParser('./tests/data/comment_clean.docx')
++        self.assertTrue(p.remove_all())
++
++        with zipfile.ZipFile('./tests/data/comment_clean.cleaned.docx') as zipin:
++            # Check if 'word/comments.xml' exists in the zip
++            self.assertNotIn('word/comments.xml', zipin.namelist())
++
++        os.remove('./tests/data/comment_clean.docx')
++        os.remove('./tests/data/comment_clean.cleaned.docx')
++
++    def test_xml_is_utf8(self):
++        with zipfile.ZipFile('./tests/data/comment.docx') as zipin:
++            c = zipin.open('word/document.xml')
++            content = c.read()
++
++            # ensure encoding is utf-8
++            r = b'encoding=(\'|\")UTF-8(\'|\")'
++            match = re.search(r, content, re.IGNORECASE)
++            self.assertIsNotNone(match)
++
++        shutil.copy('./tests/data/comment.docx', './tests/data/comment_clean.docx')
++        p = office.MSOfficeParser('./tests/data/comment_clean.docx')
++        self.assertTrue(p.remove_all())
++
++        with zipfile.ZipFile('./tests/data/comment_clean.cleaned.docx') as zipin:
++            c = zipin.open('word/document.xml')
++            content = c.read()
++
++            # ensure encoding is still utf-8
++            r = b'encoding=(\'|\")UTF-8(\'|\")'
++            match = re.search(r, content, re.IGNORECASE)
++            self.assertIsNotNone(match)
++
++        os.remove('./tests/data/comment_clean.docx')
++        os.remove('./tests/data/comment_clean.cleaned.docx')
++
++    def test_comment_references_are_removed(self):
++        with zipfile.ZipFile('./tests/data/comment.docx') as zipin:
++            c = zipin.open('word/document.xml')
++            content = c.read()
++
++            r = b'w:commentRangeStart'
++            self.assertIn(r, content)
++            r = b'w:commentRangeEnd'
++            self.assertIn(r, content)
++            r = b'w:commentReference'
++            self.assertIn(r, content)
++
++        shutil.copy('./tests/data/comment.docx', './tests/data/comment_clean.docx')
++        p = office.MSOfficeParser('./tests/data/comment_clean.docx')
++        self.assertTrue(p.remove_all())
++
++        with zipfile.ZipFile('./tests/data/comment_clean.cleaned.docx') as zipin:
++            c = zipin.open('word/document.xml')
++            content = c.read()
++
++            r = b'w:commentRangeStart'
++            self.assertNotIn(r, content)
++            r = b'w:commentRangeEnd'
++            self.assertNotIn(r, content)
++            r = b'w:commentReference'
++            self.assertNotIn(r, content)
++
++        os.remove('./tests/data/comment_clean.docx')
++        os.remove('./tests/data/comment_clean.cleaned.docx')
++
++    def test_clean_document_xml_rels(self):
++        with zipfile.ZipFile('./tests/data/comment.docx') as zipin:
++            c = zipin.open('word/_rels/document.xml.rels')
++            content = c.read()
++            r = b'Target="comments.xml"'
++            self.assertIn(r, content)
++
++        shutil.copy('./tests/data/comment.docx', './tests/data/comment_clean.docx')
++        p = office.MSOfficeParser('./tests/data/comment_clean.docx')
++        self.assertTrue(p.remove_all())
++
++        with zipfile.ZipFile('./tests/data/comment_clean.cleaned.docx') as zipin:
++            c = zipin.open('word/_rels/document.xml.rels')
++            content = c.read()
++            r = b'Target="comments.xml"'
++            self.assertNotIn(r, content)
++
++        os.remove('./tests/data/comment_clean.docx')
++        os.remove('./tests/data/comment_clean.cleaned.docx')
++

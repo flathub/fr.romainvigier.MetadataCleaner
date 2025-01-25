@@ -66,8 +66,8 @@ modules:
         sources:
           - type: git
             url: https://0xacab.org/jvoisin/mat2.git
-            tag: 0.13.4
-            commit: 04786d75dab33bc292067a114c075f403719bfac
+            tag: 0.13.5
+            commit: 6c966f2afa504570e511ee327f6fff01577ef0fc
             x-checker-data:
               type: git
               tag-pattern: ^([\d\.]+)$
@@ -85,8 +85,8 @@ modules:
             sources:
               - type: git
                 url: https://github.com/exiftool/exiftool.git
-                tag: '12.88'
-                commit: de702162a10a5a16ca74adb72a7438977fcd01aa
+                tag: '13.16'
+                commit: e2f9b3a4c57f26eabc82958cb4c6ebe66637c4e2
                 x-checker-data:
                   type: git
                   tag-pattern: ^(\d+\.\d+[02468])$
@@ -135,8 +135,8 @@ modules:
                 sources:
                   - type: git
                     url: https://github.com/Perl/perl5.git
-                    tag: v5.40.0
-                    commit: f22a16ecf4821b7e93d2569f630817a2631fddd9
+                    tag: v5.40.1
+                    commit: f722f11a2b1a34e28743e331bad6dd7da41e2086
                     disable-fsckobjects: true
                     x-checker-data:
                       type: git
@@ -159,8 +159,8 @@ modules:
             sources:
               - type: git
                 url: https://gitlab.freedesktop.org/poppler/poppler.git
-                tag: poppler-24.06.1
-                commit: c670e8e1fd8cc4630b8e02f195681027edd4c19a
+                tag: poppler-25.01.0
+                commit: 3ead1238555ce14dd0c619f1097d552307e6e40a
                 x-checker-data:
                   type: git
                   tag-pattern: ^poppler-([\d\.]+)$

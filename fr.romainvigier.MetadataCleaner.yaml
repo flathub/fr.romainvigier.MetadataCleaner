@@ -48,8 +48,8 @@ modules:
         sources:
           - type: git
             url: https://salsa.debian.org/debian/media-types.git
-            tag: 10.1.0
-            commit: a646d47b7e849a9008e4f20f8078873f0c8e2c5a
+            tag: 11.0.0
+            commit: f52213b7e13099a454edc3303d1ed7e5553fb220
             x-checker-data:
               type: git
               tag-pattern: ^([\d\.]+)$
@@ -85,8 +85,8 @@ modules:
             sources:
               - type: git
                 url: https://github.com/exiftool/exiftool.git
-                tag: '12.88'
-                commit: de702162a10a5a16ca74adb72a7438977fcd01aa
+                tag: '13.20'
+                commit: c850ced9c241c8c4a888d418f4250f8205114740
                 x-checker-data:
                   type: git
                   tag-pattern: ^(\d+\.\d+[02468])$
@@ -135,8 +135,8 @@ modules:
                 sources:
                   - type: git
                     url: https://github.com/Perl/perl5.git
-                    tag: v5.40.0
-                    commit: f22a16ecf4821b7e93d2569f630817a2631fddd9
+                    tag: v5.40.1
+                    commit: f722f11a2b1a34e28743e331bad6dd7da41e2086
                     disable-fsckobjects: true
                     x-checker-data:
                       type: git

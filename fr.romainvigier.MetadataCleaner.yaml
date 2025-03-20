@@ -48,8 +48,8 @@ modules:
         sources:
           - type: git
             url: https://salsa.debian.org/debian/media-types.git
-            tag: 10.1.0
-            commit: a646d47b7e849a9008e4f20f8078873f0c8e2c5a
+            tag: 13.0.0
+            commit: b5949cc84e966fbae4ca7de2f678aa049dd727ee
             x-checker-data:
               type: git
               tag-pattern: ^([\d\.]+)$
@@ -66,8 +66,8 @@ modules:
         sources:
           - type: git
             url: https://0xacab.org/jvoisin/mat2.git
-            tag: 0.13.4
-            commit: 04786d75dab33bc292067a114c075f403719bfac
+            tag: 0.13.5
+            commit: 6c966f2afa504570e511ee327f6fff01577ef0fc
             x-checker-data:
               type: git
               tag-pattern: ^([\d\.]+)$
@@ -85,8 +85,8 @@ modules:
             sources:
               - type: git
                 url: https://github.com/exiftool/exiftool.git
-                tag: '12.88'
-                commit: de702162a10a5a16ca74adb72a7438977fcd01aa
+                tag: '13.24'
+                commit: 9753c507a3c083252db6e3a0d1ebb790e64105e0
                 x-checker-data:
                   type: git
                   tag-pattern: ^(\d+\.\d+[02468])$
@@ -135,8 +135,8 @@ modules:
                 sources:
                   - type: git
                     url: https://github.com/Perl/perl5.git
-                    tag: v5.40.0
-                    commit: f22a16ecf4821b7e93d2569f630817a2631fddd9
+                    tag: v5.40.1
+                    commit: f722f11a2b1a34e28743e331bad6dd7da41e2086
                     disable-fsckobjects: true
                     x-checker-data:
                       type: git
@@ -159,8 +159,8 @@ modules:
             sources:
               - type: git
                 url: https://gitlab.freedesktop.org/poppler/poppler.git
-                tag: poppler-24.06.1
-                commit: c670e8e1fd8cc4630b8e02f195681027edd4c19a
+                tag: poppler-25.03.0
+                commit: 7b620e866b6729ceffb5ecb0298e9acc968e1c1f
                 x-checker-data:
                   type: git
                   tag-pattern: ^poppler-([\d\.]+)$
